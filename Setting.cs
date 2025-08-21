@@ -12,8 +12,8 @@ namespace CheckArhcivAvail
         /// <summary>
         /// Путь к директории проверки
         /// </summary>
-        private string Path
-        { 
+        public string Path
+        {
             get
             {
                 return Path;
@@ -23,7 +23,7 @@ namespace CheckArhcivAvail
                 string path = ConfigurationManager.AppSettings["Path"];
                 if (path == null)
                 {
-                    throw new Exception("В найстройках поле Path не заполнено");
+                    throw new Exception("В настройках поле Path не заполнено");
                 }
                 else
                 {
@@ -34,7 +34,7 @@ namespace CheckArhcivAvail
         /// <summary>
         /// Расширение файла для проверки его наличия
         /// </summary>
-        private string FileExtension
+        public string FileExtension
         {
             get
             {
@@ -45,7 +45,7 @@ namespace CheckArhcivAvail
                 string fileExtension = ConfigurationManager.AppSettings["FileExtension"];
                 if (fileExtension == null)
                 {
-                    throw new Exception("В найстройках поле FileExtension не заполнено");
+                    throw new Exception("В настройках поле FileExtension не заполнено");
                 }
                 else
                 {
@@ -56,18 +56,18 @@ namespace CheckArhcivAvail
         /// <summary>
         /// Временой интервал между проверками в минутах
         /// </summary>
-        private int CheckTimeIntervalInMinuts
+        public int CheckTimeIntervalInMinuts
         {
             get
             {
-                return CheckTimeIntervalInMinuts;
+                return CheckTimeIntervalInMinuts * 60000;
             }
             set
             {
                 string checkTimeIntervalInMinuts = ConfigurationManager.AppSettings["CheckTimeIntervalInMinuts"];
                 if (checkTimeIntervalInMinuts == null)
                 {
-                    throw new Exception("В найстройках поле CheckTimeIntervalInMinuts не заполнено");
+                    throw new Exception("В настройках поле CheckTimeIntervalInMinuts не заполнено");
                 }
                 else
                 {
@@ -78,17 +78,18 @@ namespace CheckArhcivAvail
         /// <summary>
         /// Включить звуковое сопровождение при обнаружении файла
         /// </summary>
-        private bool AudioPlayback
+        public bool AudioPlayback
         {
             set
             {
                 string audioPlayback = ConfigurationManager.AppSettings["AudioPlayback"];
                 if (audioPlayback == null)
                 {
-                    throw new Exception("В найстройках поле AudioPlayback не заполнено");
+                    throw new Exception("В настройках поле AudioPlayback не заполнено");
                 }
                 else if (audioPlayback != "true" || audioPlayback != "false")
                 {
+                    Console.WriteLine("В настройках поле Path не заполнено");
                     throw new Exception("В поле AudioPlayback не верно записано true/false");
                 }
                 else
@@ -98,20 +99,20 @@ namespace CheckArhcivAvail
             }
         }
         /// <summary>
-        /// Повторная поверка после предварительного нахождения файла
+        /// Повторная поверка после предварительного нахождения файла в секундах
         /// </summary>
-        private int RepeatCheckInSeconds
+        public int RepeatCheckInSeconds
         {
             get
             {
-                return RepeatCheckInSeconds;
+                return RepeatCheckInSeconds * 1000;
             }
             set
             {
                 string repeatCheckInSeconds = ConfigurationManager.AppSettings["RepeatCheckInSeconds"];
                 if (repeatCheckInSeconds == null)
                 {
-                    throw new Exception("В найстройках поле RepeatCheckInSeconds не заполнено");
+                    throw new Exception("В настройках поле RepeatCheckInSeconds не заполнено");
                 }
                 else
                 {
@@ -122,7 +123,7 @@ namespace CheckArhcivAvail
         /// <summary>
         /// Путь к звуковой дорожке
         /// </summary>
-        private string PathInSound
+        public string PathInSound
         {
             get
             {
@@ -133,7 +134,7 @@ namespace CheckArhcivAvail
                 string pathInSound = ConfigurationManager.AppSettings["PathInSound"];
                 if (pathInSound == null)
                 {
-                    throw new Exception("В найстройках поле PathInSound не заполнено");
+                    throw new Exception("В настройках поле PathInSound не заполнено");
                 }
                 else
                 {
