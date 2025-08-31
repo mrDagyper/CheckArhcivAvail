@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -23,32 +24,72 @@ namespace CheckArhcivAvail
             try
             {
                 CheckDirectory checkDirectory = new CheckDirectory();
-                Setting setting = new Setting();
-                IEnumerable<FileInfo> archives;
+                List<string> archives = new List<string> ();
+                archives = null;
+                Alert alert = new Alert();
+                string strTimeCheck = null;
 
                 while (true)
                 {
                     if (checkDirectory.CheckForAnArchive())
                     {
-                        Thread.Sleep(setting.RepeatCheckInSeconds);
-                        if(checkDirectory.CheckForAnArchive())
+                        if (archives == null)
                         {
-                            archives = checkDirectory.Archives;
-                            AlertPrc();
+                            Thread.Sleep(Setting.RepeatCheckInSeconds);
+                            if (checkDirectory.CheckForAnArchive())
+                            {
+                                //Console.Clear();
+                                archives = checkDirectory.Archives;
+                                alert.NameArchives = archives;
+                                strTimeCheck = alert.InformationCheck(strTimeCheck);
+                                alert.AlertProcess();
+                            }
                         }
+                        else if (!archives.SequenceEqual(checkDirectory.Archives))
+                        {
+                            Thread.Sleep(Setting.RepeatCheckInSeconds);
+                            if (checkDirectory.CheckForAnArchive())
+                            {
+                               // Console.Clear();
+                                archives = checkDirectory.Archives.ToList();
+                                alert.NameArchives = archives;
+                                strTimeCheck = alert.InformationCheck(strTimeCheck);
+                                alert.AlertProcess();
+                            }
+                        }
+                        else if (archives.SequenceEqual(checkDirectory.Archives))
+                        {
+                          //  Console.Clear();
+                            strTimeCheck = alert.InformationCheck(strTimeCheck);
+                            alert.SlineceAlertProcess();
+
+                        }
+                        
                     }
                     else
                     {
+                        if (alert.NameArchives.Count > 0)
+                        {
+                            alert.ClearOther();
+                        }
+
+                        //Console.Clear();
+                        strTimeCheck = alert.InformationCheck(strTimeCheck);
                         archives = null;
                     }
+
+                   // strTimeCheck = InformationCheck(strTimeCheck);
+                    Thread.Sleep(Setting.CheckTimeIntervalInMinuts);
                 }
             }
             catch (Exception ex)
-            {
+            { 
                 Console.WriteLine(ex.ToString());
                 Console.ReadLine();
             }
         }
+
+        
 
         
     }

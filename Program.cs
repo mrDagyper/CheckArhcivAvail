@@ -10,6 +10,11 @@ namespace CheckArhcivAvail
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("============== Проверка застрявших заявок ==================");
+            Console.WriteLine();
+
+            ProcessOfVerification processOfVerification = new ProcessOfVerification();
+            processOfVerification.MainProcces();
         }
     }
 }

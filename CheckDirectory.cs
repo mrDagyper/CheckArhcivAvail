@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Net.WebRequestMethods;
 
 namespace CheckArhcivAvail
 {
@@ -13,14 +14,23 @@ namespace CheckArhcivAvail
     /// </summary>
     internal class CheckDirectory
     {
-        private string Path { get; set; }
+        /// <summary>
+        /// Директория для проверки
+        /// </summary>
+        private string Path;
+        /// <summary>
+        /// Коллекция найденных архивов
+        /// </summary>
+       // public IEnumerable<string> Archives;
+        public List<string> Archives;
+        private string FileExtension;
 
-        public IEnumerable<FileInfo> Archives;
 
         public CheckDirectory() 
         {
-            Setting setting = new Setting();
-            Path = setting.Path;
+            //Setting setting = new Setting();
+            Path = Setting.Path;
+            FileExtension = Setting.FileExtension;
         }
         public CheckDirectory(string path) {  Path = path; }
 
@@ -41,7 +51,7 @@ namespace CheckArhcivAvail
         /// <param name="allFiles">все файлы в каталоге</param>
         /// <returns></returns>
         private IEnumerable<FileInfo> GetArchiveForDirectory(FileInfo[] allFiles)
-            => allFiles.Where(x => x.Extension.ToLower() == ".rar");
+            => allFiles.Where(x => x.Extension.ToLower() == FileExtension);
 
         /// <summary>
         /// Проверка на наличие архива в директории
@@ -53,11 +63,23 @@ namespace CheckArhcivAvail
             var archives = GetArchiveForDirectory(GetFilesForDirectory());
             if( archives.Count() != 0)
             {
-                this.Archives = archives;
+                //this.Archives = archives;
+                PullsOutTheName(archives);
                 return true;
             }
             this.Archives = null;
             return false;
+        }
+
+        private void PullsOutTheName(IEnumerable<FileInfo> files)
+        {
+            List<string> names = new List<string>();
+            foreach (var file in files)
+            {
+               names.Add(file.FullName);
+            }
+            this.Archives = names;
+            
         }
     }
 

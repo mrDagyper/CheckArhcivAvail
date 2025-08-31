@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace CheckArhcivAvail
 {
-    internal class Setting
+    internal static class Setting
     {
         /// <summary>
         /// Путь к директории проверки
         /// </summary>
-        public string Path
+        public static string Path
         {
             get
-            {
-                return Path;
-            }
-            set
             {
                 string path = ConfigurationManager.AppSettings["Path"];
                 if (path == null)
@@ -27,20 +23,16 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ = path;
+                    return path;
                 }
             }
         }
         /// <summary>
         /// Расширение файла для проверки его наличия
         /// </summary>
-        public string FileExtension
+        public static string FileExtension
         {
             get
-            {
-                return FileExtension;
-            }
-            set
             {
                 string fileExtension = ConfigurationManager.AppSettings["FileExtension"];
                 if (fileExtension == null)
@@ -49,20 +41,16 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ = fileExtension;
+                    return fileExtension;
                 }
             }
         }
         /// <summary>
         /// Временой интервал между проверками в минутах
         /// </summary>
-        public int CheckTimeIntervalInMinuts
+        public static int CheckTimeIntervalInMinuts
         {
             get
-            {
-                return CheckTimeIntervalInMinuts * 60000;
-            }
-            set
             {
                 string checkTimeIntervalInMinuts = ConfigurationManager.AppSettings["CheckTimeIntervalInMinuts"];
                 if (checkTimeIntervalInMinuts == null)
@@ -71,16 +59,16 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ =  Int32.Parse(checkTimeIntervalInMinuts);
+                    return Int32.Parse(checkTimeIntervalInMinuts) * 60000;
                 }
             }
         }
         /// <summary>
         /// Включить звуковое сопровождение при обнаружении файла
         /// </summary>
-        public bool AudioPlayback
+        public static bool AudioPlayback
         {
-            set
+            get
             {
                 string audioPlayback = ConfigurationManager.AppSettings["AudioPlayback"];
                 if (audioPlayback == null)
@@ -94,20 +82,16 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ = bool.Parse(audioPlayback);
+                    return bool.Parse(audioPlayback);
                 }
             }
         }
         /// <summary>
-        /// Повторная поверка после предварительного нахождения файла в секундах
+        /// Повторная пауза перед повторной проверкой. Время в секундах.
         /// </summary>
-        public int RepeatCheckInSeconds
+        public static int RepeatCheckInSeconds
         {
             get
-            {
-                return RepeatCheckInSeconds * 1000;
-            }
-            set
             {
                 string repeatCheckInSeconds = ConfigurationManager.AppSettings["RepeatCheckInSeconds"];
                 if (repeatCheckInSeconds == null)
@@ -116,20 +100,16 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ = Int32.Parse(repeatCheckInSeconds);
+                    return Int32.Parse(repeatCheckInSeconds) * 1000;
                 }
             }
         }
         /// <summary>
         /// Путь к звуковой дорожке
         /// </summary>
-        public string PathInSound
+        public static string PathInSound
         {
             get
-            {
-                return PathInSound;
-            }
-            set
             {
                 string pathInSound = ConfigurationManager.AppSettings["PathInSound"];
                 if (pathInSound == null)
@@ -138,7 +118,7 @@ namespace CheckArhcivAvail
                 }
                 else
                 {
-                    _ = pathInSound;
+                    return pathInSound;
                 }
             }
         }
